@@ -3,8 +3,10 @@ pipeline {
 
   environment {
     DOCKER_REGISTRY = "docker.io"
-    DOCKER_REPO     = "hragab211/hossam_portfolio"   // <-- change if needed
+    DOCKER_REPO     = "hragab211/hossam-portfolio"   // change if your repo name differs
     DOCKER_CREDS    = "dockerhub-creds"
+    GIT_URL         = "https://github.com/HRagab211/portfolio.git" // <-- CHANGE
+    GIT_BRANCH      = "main"
   }
 
   options {
@@ -13,25 +15,13 @@ pipeline {
   }
 
   triggers {
-    pollSCM('H/5 * * * *')   // every 5 minutes
+    pollSCM('H/2 * * * *')   // every 2 minutes
   }
 
   stages {
-
-    stage("Checkout") {
+    stage("Checkout main") {
       steps {
-        checkout scm
-      }
-    }
-
-    stage("Check Branch") {
-      steps {
-        script {
-          if (env.BRANCH_NAME != "main") {
-            currentBuild.result = 'NOT_BUILT'
-            error("Not main branch. Skipping build.")
-          }
-        }
+        git branch: "${GIT_BRANCH}", url: "${GIT_URL}"
       }
     }
 
@@ -40,7 +30,7 @@ pipeline {
         script {
           def shortSha = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
           env.IMAGE_TAG = "v${env.BUILD_NUMBER}-${shortSha}"
-          echo "Version: ${env.IMAGE_TAG}"
+          echo "Image tag: ${env.IMAGE_TAG}"
         }
       }
     }
@@ -54,7 +44,7 @@ pipeline {
       }
     }
 
-    stage("Push Image") {
+    stage("Push Docker Image") {
       steps {
         withCredentials([usernamePassword(
           credentialsId: DOCKER_CREDS,
@@ -74,10 +64,7 @@ pipeline {
 
   post {
     success {
-      echo "✅ Successfully pushed ${DOCKER_REPO}:${IMAGE_TAG}"
-    }
-    failure {
-      echo "❌ Build failed"
+      echo "✅ Pushed ${DOCKER_REPO}:${IMAGE_TAG} and :latest"
     }
   }
 }
