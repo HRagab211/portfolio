@@ -2,10 +2,9 @@ pipeline {
   agent any
 
   environment {
-    // ---- CHANGE THESE ----
-    DOCKER_REGISTRY = "docker.io"                  // Docker Hub
-    DOCKER_REPO     = "hragab211/hossam_portfolio"  // e.g. hragab211/hossam-portfolio
-    DOCKER_CREDS    = "dockerhub-creds"            // Jenkins credentials ID (Username/Password)
+    DOCKER_REGISTRY = "docker.io"
+    DOCKER_REPO     = "hragab211/hossam_portfolio"   // <-- change if needed
+    DOCKER_CREDS    = "dockerhub-creds"
   }
 
   options {
@@ -13,49 +12,61 @@ pipeline {
     disableConcurrentBuilds()
   }
 
+  triggers {
+    pollSCM('H/5 * * * *')   // every 5 minutes
+  }
+
   stages {
+
     stage("Checkout") {
       steps {
         checkout scm
       }
     }
 
-    stage("Build Version") {
+    stage("Check Branch") {
       steps {
         script {
-          // Version format: v<BUILD_NUMBER>-<shortSHA>
+          if (env.BRANCH_NAME != "main") {
+            currentBuild.result = 'NOT_BUILT'
+            error("Not main branch. Skipping build.")
+          }
+        }
+      }
+    }
+
+    stage("Generate Version") {
+      steps {
+        script {
           def shortSha = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
           env.IMAGE_TAG = "v${env.BUILD_NUMBER}-${shortSha}"
-          echo "Build tag: ${env.IMAGE_TAG}"
+          echo "Version: ${env.IMAGE_TAG}"
         }
       }
     }
 
     stage("Build Docker Image") {
       steps {
-        script {
-          sh """
-            docker build -t ${DOCKER_REPO}:${IMAGE_TAG} .
-            docker tag ${DOCKER_REPO}:${IMAGE_TAG} ${DOCKER_REPO}:latest
-          """
-        }
+        sh """
+          docker build -t ${DOCKER_REPO}:${IMAGE_TAG} .
+          docker tag ${DOCKER_REPO}:${IMAGE_TAG} ${DOCKER_REPO}:latest
+        """
       }
     }
 
-    stage("Push Docker Image") {
-      when {
-        branch "main"
-      }
+    stage("Push Image") {
       steps {
-        script {
-          withCredentials([usernamePassword(credentialsId: DOCKER_CREDS, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-            sh """
-              echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin ${DOCKER_REGISTRY}
-              docker push ${DOCKER_REPO}:${IMAGE_TAG}
-              docker push ${DOCKER_REPO}:latest
-              docker logout ${DOCKER_REGISTRY}
-            """
-          }
+        withCredentials([usernamePassword(
+          credentialsId: DOCKER_CREDS,
+          usernameVariable: 'DOCKER_USER',
+          passwordVariable: 'DOCKER_PASS'
+        )]) {
+          sh """
+            echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin ${DOCKER_REGISTRY}
+            docker push ${DOCKER_REPO}:${IMAGE_TAG}
+            docker push ${DOCKER_REPO}:latest
+            docker logout ${DOCKER_REGISTRY}
+          """
         }
       }
     }
@@ -63,13 +74,10 @@ pipeline {
 
   post {
     success {
-      echo "✅ Pushed: ${DOCKER_REPO}:${IMAGE_TAG} and ${DOCKER_REPO}:latest"
+      echo "✅ Successfully pushed ${DOCKER_REPO}:${IMAGE_TAG}"
     }
-    cleanup {
-      // Optional cleanup to save disk space
-      sh """
-        docker image prune -f || true
-      """
+    failure {
+      echo "❌ Build failed"
     }
   }
 }
