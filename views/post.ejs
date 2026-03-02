@@ -1,0 +1,26 @@
+<%- include("layout-top") %>
+
+<section class="pt-10">
+  <a href="/blog" class="inline-flex items-center gap-2 rounded-xl bg-black/5 px-3 py-2 text-sm ring-1 ring-black/10 hover:bg-black/10 dark:bg-white/10 dark:ring-white/10 dark:hover:bg-white/15 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+    <span>←</span>
+    <span><%= t("blog.back") %></span>
+  </a>
+
+  <article class="mt-6 rounded-3xl border border-black/10 bg-white/70 p-7 shadow-soft dark:border-white/10 dark:bg-white/5 <%= lang==='ar' ? 'text-right' : '' %>">
+    <header class="flex items-start justify-between gap-4 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+      <div>
+        <h1 class="text-2xl font-semibold text-slate-900 dark:text-white"><%= (post.title[lang] || post.title.en) %></h1>
+        <div class="mt-2 text-xs text-slate-500 dark:text-slate-400"><%= post.date %> • <%= post.readTime %></div>
+      </div>
+      <span class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs text-indigo-700 ring-1 ring-indigo-400/20 dark:text-indigo-200"><%= lang==='ar' ? 'مقال' : 'Note' %></span>
+    </header>
+
+    <div class="mt-6 space-y-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+      <% (post.content[lang] || post.content.en).forEach((p) => { %>
+        <p><%= p %></p>
+      <% }) %>
+    </div>
+  </article>
+</section>
+
+<%- include("layout-bottom") %>

@@ -1,0 +1,277 @@
+<%- include("layout-top") %>
+
+<!-- Hero -->
+<section id="top" class="relative overflow-hidden pt-12 sm:pt-16">
+  <div class="absolute inset-0 -z-10">
+    <div class="pointer-events-none absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-400/25 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 left-16 h-72 w-72 rounded-full bg-indigo-400/20 blur-3xl"></div>
+  </div>
+
+  <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
+    <div class="lg:col-span-7 <%= lang==='ar' ? 'text-right' : '' %>">
+      <div class="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/5 px-3 py-1 text-xs text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+        <span class="h-2 w-2 rounded-full bg-cyan-500"></span>
+        <%= t("hero.available") %>
+      </div>
+
+      <h1 class="mt-4 text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+        <%= lang === 'ar' ? 'أبني منتجات ويب سريعة وموثوقة باستخدام' : 'Building fast, reliable web products with' %>
+        <span class="bg-gradient-to-r from-cyan-500 to-indigo-500 bg-clip-text text-transparent">Laravel</span>
+        <%= lang === 'ar' ? 'و' : '&' %>
+        <span class="bg-gradient-to-r from-indigo-500 to-cyan-500 bg-clip-text text-transparent">Vue.js</span>.
+      </h1>
+
+      <p class="mt-4 text-base leading-relaxed text-slate-700 dark:text-slate-200 sm:text-lg">
+        <%= (profile.summary[lang] || profile.summary.en).join(' ') %>
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3 <%= lang==='ar' ? 'justify-end' : '' %>">
+        <a href="/projects" class="inline-flex items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-soft hover:bg-cyan-600">
+          <%= t("nav.projects") %>
+        </a>
+        <a href="/download/cv" class="inline-flex items-center justify-center rounded-2xl bg-black/5 px-5 py-3 text-sm font-semibold text-slate-900 ring-1 ring-black/10 hover:bg-black/10 dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/15">
+          <%= t("cta.download_cv") %>
+        </a>
+        <a href="/#contact" class="inline-flex items-center justify-center rounded-2xl bg-white/60 px-5 py-3 text-sm font-semibold text-slate-900 ring-1 ring-black/10 hover:bg-white dark:bg-white/10 dark:text-white dark:ring-white/10 dark:hover:bg-white/15">
+          <%= t("nav.contact") %>
+        </a>
+      </div>
+
+      <div class="mt-8 grid gap-3 sm:grid-cols-3">
+        <div class="reveal rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-white/5">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'الخبرة' : 'Experience' %></div>
+          <div class="mt-1 text-sm text-slate-600 dark:text-slate-300">3+ years</div>
+        </div>
+        <div class="reveal rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-white/5">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'الـ Stack' : 'Core Stack' %></div>
+          <div class="mt-1 text-sm text-slate-600 dark:text-slate-300">Laravel • Vue • MySQL</div>
+        </div>
+        <div class="reveal rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-white/5">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'نقاط القوة' : 'Strength' %></div>
+          <div class="mt-1 text-sm text-slate-600 dark:text-slate-300"><%= (profile.strengths[lang] || profile.strengths.en).join(' • ') %></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5">
+      <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5">
+        <div class="flex items-start justify-between gap-4 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+          <div class="flex items-center gap-4 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+            <img
+              src="<%= profile.photo %>"
+              onerror="this.onerror=null; this.src='/images/me.svg';"
+              alt="<%= profile.name %>"
+              class="h-16 w-16 rounded-2xl object-cover ring-1 ring-black/10 shadow-soft dark:ring-white/10"
+            />
+            <div class="<%= lang==='ar' ? 'text-right' : '' %>">
+              <div class="text-sm text-slate-600 dark:text-slate-300"><%= lang==='ar' ? 'حاليًا' : 'Currently' %></div>
+              <div class="text-lg font-semibold text-slate-900 dark:text-white"><%= profile.title %></div>
+              <div class="text-sm text-slate-600 dark:text-slate-300"><%= profile.location %></div>
+            </div>
+          </div>
+          <span class="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-400/20 dark:text-emerald-200"><%= lang==='ar' ? 'متاح للعمل' : 'Open to work' %></span>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40">
+          <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"><%= t("sections.metrics.title") %></div>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-200 <%= lang==='ar' ? 'pr-5 pl-0 text-right list-inside' : '' %>">
+            <% (profile.impactMetrics[lang] || profile.impactMetrics.en).forEach((m) => { %>
+              <li><%= m %></li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          <a class="rounded-2xl border border-black/10 bg-white/60 p-4 text-sm font-medium text-slate-900 hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 <%= lang==='ar' ? 'text-right' : '' %>"
+             href="<%= profile.socials.github %>" target="_blank" rel="noreferrer">
+            GitHub: HRagab211
+            <div class="mt-1 text-xs text-slate-600 dark:text-slate-300"><%= lang==='ar' ? 'مشاريعي وكودي' : 'Code & projects' %></div>
+          </a>
+          <a class="rounded-2xl border border-black/10 bg-white/60 p-4 text-sm font-medium text-slate-900 hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 <%= lang==='ar' ? 'text-right' : '' %>"
+             href="<%= profile.socials.linkedin %>" target="_blank" rel="noreferrer">
+            LinkedIn
+            <div class="mt-1 text-xs text-slate-600 dark:text-slate-300"><%= lang==='ar' ? 'تواصل معي' : 'Let’s connect' %></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="mt-16 scroll-mt-24">
+  <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+    <%- include("partials/sectionHeader", { title: t("nav.about"), subtitle: t("sections.about.subtitle") }) %>
+    <div class="lg:col-span-8">
+      <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5 <%= lang==='ar' ? 'text-right' : '' %>">
+        <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+          <%= lang === 'ar'
+            ? 'أركز على بناء تطبيقات قابلة للتوسع وسهلة الصيانة مع تجربة مستخدم ممتازة. أحب تسليم الميزة من البداية للنهاية: APIs، قاعدة البيانات، الواجهة، ثم نشرها بشكل مستقر.'
+            : 'I build web applications with a strong focus on maintainability, performance, and user experience. I enjoy delivering end-to-end features—APIs, database design, clean UI, and stable production deployments.' %>
+        </p>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40">
+            <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'مجالات خبرة' : 'Industries' %></div>
+            <%- include("partials/badgeList", { items: (profile.industries[lang] || profile.industries.en) }) %>
+          </div>
+          <div class="rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40">
+            <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= t("sections.testimonials.title") %></div>
+            <ul class="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+              <% (profile.testimonials[lang] || profile.testimonials.en).forEach((q) => { %>
+                <li class="italic">“<%= q.replace(/^“|”$/g,'') %>”</li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="mt-16 scroll-mt-24">
+  <div class="grid gap-8 lg:grid-cols-12">
+    <%- include("partials/sectionHeader", { title: t("nav.skills"), subtitle: t("sections.skills.subtitle") }) %>
+
+    <div class="lg:col-span-8">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <%- include("partials/skillCard", { title: (lang==='ar'?'متقدم':'Advanced'), items: (profile.skillsByLevel.advanced[lang] || profile.skillsByLevel.advanced.en) }) %>
+        <%- include("partials/skillCard", { title: (lang==='ar'?'جيد جدًا':'Proficient'), items: (profile.skillsByLevel.proficient[lang] || profile.skillsByLevel.proficient.en) }) %>
+        <%- include("partials/skillCard", { title: (lang==='ar'?'معرفة':'Familiar'), items: (profile.skillsByLevel.familiar[lang] || profile.skillsByLevel.familiar.en) }) %>
+        <%- include("partials/skillCard", { title: (lang==='ar'?'أدوات':'Tools'), items: profile.tools }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="mt-16 scroll-mt-24">
+  <div class="grid gap-8 lg:grid-cols-12">
+    <%- include("partials/sectionHeader", { title: t("sections.services.title"), subtitle: t("sections.services.subtitle") }) %>
+    <div class="lg:col-span-8 grid gap-4 sm:grid-cols-3">
+      <% (profile.services[lang] || profile.services.en).forEach((s) => { %>
+        <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5 <%= lang==='ar' ? 'text-right' : '' %>">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= s.title %></div>
+          <p class="mt-2 text-sm text-slate-700 dark:text-slate-200"><%= s.desc %></p>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience" class="mt-16 scroll-mt-24">
+  <div class="grid gap-8 lg:grid-cols-12">
+    <%- include("partials/sectionHeader", { title: t("nav.experience"), subtitle: t("sections.experience.subtitle") }) %>
+    <div class="lg:col-span-8 space-y-4">
+      <% profile.experience.forEach((e) => { %>
+        <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5">
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between <%= lang==='ar' ? 'sm:flex-row-reverse' : '' %>">
+            <div class="<%= lang==='ar' ? 'text-right' : '' %>">
+              <div class="text-base font-semibold text-slate-900 dark:text-white"><%= (e.role[lang] || e.role.en) %></div>
+              <div class="text-sm text-slate-600 dark:text-slate-300"><%= (e.company[lang] || e.company.en) %></div>
+            </div>
+            <div class="text-sm text-slate-600 dark:text-slate-300"><%= e.period %></div>
+          </div>
+          <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-200 <%= lang==='ar' ? 'pr-5 pl-0 text-right list-inside' : '' %>">
+            <% (e.bullets[lang] || e.bullets.en).forEach((b) => { %>
+              <li><%= b %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education" class="mt-16 scroll-mt-24">
+  <div class="grid gap-8 lg:grid-cols-12">
+    <%- include("partials/sectionHeader", { title: t("nav.education"), subtitle: "" }) %>
+    <div class="lg:col-span-8">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5 <%= lang==='ar' ? 'text-right' : '' %>">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'التعليم / التدريب' : 'Education / Training' %></div>
+          <ul class="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+            <% profile.education.forEach((ed) => { %>
+              <li class="flex items-start justify-between gap-3 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+                <span><%= (ed.name[lang] || ed.name.en) %><span class="text-slate-500 dark:text-slate-400"> — <%= ed.org %></span></span>
+                <span class="text-slate-500 dark:text-slate-400"><%= ed.year %></span>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5 <%= lang==='ar' ? 'text-right' : '' %>">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'الشهادات' : 'Certifications' %></div>
+          <ul class="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-200">
+            <% profile.certifications.forEach((c) => { %>
+              <li class="flex items-start justify-between gap-3 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+                <span><%= typeof c.name === 'string' ? c.name : (c.name[lang] || c.name.en) %></span>
+                <span class="text-slate-500 dark:text-slate-400"><%= c.year %></span>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="mt-16 scroll-mt-24 pb-16">
+  <div class="grid gap-8 lg:grid-cols-12">
+    <%- include("partials/sectionHeader", { title: t("nav.contact"), subtitle: t("sections.contact.subtitle") }) %>
+    <div class="lg:col-span-8">
+      <div class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft dark:border-white/10 dark:bg-white/5">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40 <%= lang==='ar' ? 'text-right' : '' %>">
+            <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">Email</div>
+            <a class="mt-2 block text-sm font-medium text-cyan-700 hover:text-cyan-800 dark:text-cyan-200 dark:hover:text-cyan-100" href="mailto:<%= profile.email %>"><%= profile.email %></a>
+          </div>
+          <div class="rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40 <%= lang==='ar' ? 'text-right' : '' %>">
+            <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400"><%= lang==='ar' ? 'الموقع' : 'Location' %></div>
+            <div class="mt-2 text-sm text-slate-700 dark:text-slate-200"><%= profile.location %></div>
+          </div>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40 <%= lang==='ar' ? 'text-right' : '' %>">
+            <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">GitHub</div>
+            <a class="mt-2 block text-sm font-medium hover:underline" href="<%= profile.socials.github %>" target="_blank" rel="noreferrer"><%= profile.socials.github %></a>
+          </div>
+          <div class="rounded-2xl border border-black/10 bg-black/5 p-4 dark:border-white/10 dark:bg-slate-950/40 <%= lang==='ar' ? 'text-right' : '' %>">
+            <div class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">LinkedIn</div>
+            <a class="mt-2 block text-sm font-medium hover:underline" href="<%= profile.socials.linkedin %>" target="_blank" rel="noreferrer"><%= profile.socials.linkedin %></a>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-2xl border border-black/10 bg-white/70 p-5 dark:border-white/10 dark:bg-white/5">
+          <div class="text-sm font-semibold text-slate-900 dark:text-white <%= lang==='ar' ? 'text-right' : '' %>"><%= t("contact.form.title") %></div>
+          <p class="mt-1 text-xs text-slate-600 dark:text-slate-300 <%= lang==='ar' ? 'text-right' : '' %>"><%= t("contact.form.note") %></p>
+
+          <form class="mt-4 grid gap-3" method="POST" action="/contact">
+            <div class="grid gap-3 sm:grid-cols-2">
+              <input name="name" required minlength="2"
+                     class="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-cyan-400/40 focus:ring-4 dark:border-white/10 dark:bg-slate-950/40"
+                     placeholder="<%= t('contact.form.name') %>"/>
+              <input name="email" required type="email"
+                     class="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-cyan-400/40 focus:ring-4 dark:border-white/10 dark:bg-slate-950/40"
+                     placeholder="<%= t('contact.form.email') %>"/>
+            </div>
+            <textarea name="message" required minlength="10" rows="5"
+                      class="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-cyan-400/40 focus:ring-4 dark:border-white/10 dark:bg-slate-950/40"
+                      placeholder="<%= t('contact.form.message') %>"></textarea>
+
+            <button class="inline-flex items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-600 <%= lang==='ar' ? 'justify-self-end' : 'justify-self-start' %>">
+              <%= t("contact.form.send") %>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include("layout-bottom") %>

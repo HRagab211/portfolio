@@ -1,0 +1,39 @@
+<%- include("layout-top") %>
+
+<section class="pt-10">
+  <div class="flex items-end justify-between gap-4 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+    <div class="<%= lang==='ar' ? 'text-right' : '' %>">
+      <h1 class="text-2xl font-semibold text-slate-900 dark:text-white"><%= t("nav.projects") %></h1>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><%= t("sections.projects.subtitle") %></p>
+    </div>
+    <a href="/#top" class="rounded-xl bg-black/5 px-3 py-2 text-sm ring-1 ring-black/10 hover:bg-black/10 dark:bg-white/10 dark:ring-white/10 dark:hover:bg-white/15">
+      <%= lang==='ar' ? 'الرئيسية' : 'Home' %>
+    </a>
+  </div>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2">
+    <% profile.projects.forEach((p) => { %>
+      <a href="/projects/<%= p.slug %>" class="reveal group rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft transition hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10">
+        <div class="flex items-start justify-between gap-3 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+          <div class="<%= lang==='ar' ? 'text-right' : '' %>">
+            <div class="text-base font-semibold text-slate-900 dark:text-white"><%= (p.name[lang] || p.name.en) %></div>
+            <div class="mt-1 text-sm text-slate-600 dark:text-slate-300"><%= (p.summary[lang] || p.summary.en) %></div>
+          </div>
+          <span class="rounded-full bg-indigo-500/10 px-3 py-1 text-xs text-indigo-700 ring-1 ring-indigo-400/20 dark:text-indigo-200"><%= lang==='ar' ? 'دراسة حالة' : 'Case' %></span>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2 <%= lang==='ar' ? 'justify-end' : '' %>">
+          <% p.stack.forEach((s) => { %>
+            <span class="rounded-full bg-cyan-500/10 px-3 py-1 text-xs text-cyan-700 ring-1 ring-cyan-400/20 dark:text-cyan-200"><%= s %></span>
+          <% }) %>
+        </div>
+
+        <div class="mt-4 text-sm font-medium text-cyan-700 dark:text-cyan-200 <%= lang==='ar' ? 'text-right' : '' %>">
+          <%= lang==='ar' ? 'عرض التفاصيل →' : 'View details →' %>
+        </div>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include("layout-bottom") %>

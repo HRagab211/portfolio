@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="<%= lang %>" dir="<%= dir %>" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= profile.name %> • Portfolio</title>
+    <meta name="description" content="Portfolio of <%= profile.name %> — <%= profile.title %>." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- Tailwind (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 selection:bg-cyan-400/30 selection:text-white">
+    <%- include("partials/nav") %>
+    <main class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

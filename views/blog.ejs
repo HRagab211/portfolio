@@ -1,0 +1,27 @@
+<%- include("layout-top") %>
+
+<section class="pt-10">
+  <div class="flex items-end justify-between gap-4 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+    <div class="<%= lang==='ar' ? 'text-right' : '' %>">
+      <h1 class="text-2xl font-semibold text-slate-900 dark:text-white"><%= t("nav.blog") %></h1>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><%= t("sections.blog.subtitle") %></p>
+    </div>
+    <a href="/#top" class="rounded-xl bg-black/5 px-3 py-2 text-sm ring-1 ring-black/10 hover:bg-black/10 dark:bg-white/10 dark:ring-white/10 dark:hover:bg-white/15">
+      <%= lang==='ar' ? 'الرئيسية' : 'Home' %>
+    </a>
+  </div>
+
+  <div class="mt-8 grid gap-4">
+    <% profile.blog.forEach((p) => { %>
+      <a href="/blog/<%= p.slug %>" class="reveal rounded-3xl border border-black/10 bg-white/60 p-6 shadow-soft hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 <%= lang==='ar' ? 'text-right' : '' %>">
+        <div class="flex items-center justify-between gap-4 <%= lang==='ar' ? 'flex-row-reverse' : '' %>">
+          <div class="text-base font-semibold text-slate-900 dark:text-white"><%= (p.title[lang] || p.title.en) %></div>
+          <div class="text-xs text-slate-500 dark:text-slate-400"><%= p.date %> • <%= p.readTime %></div>
+        </div>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><%= lang==='ar' ? 'اقرأ المقال →' : 'Read →' %></p>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<%- include("layout-bottom") %>

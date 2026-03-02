@@ -1,0 +1,21 @@
+<%- include("layout-top") %>
+
+<section class="pt-16">
+  <div class="rounded-3xl border border-black/10 bg-white/70 p-8 shadow-soft dark:border-white/10 dark:bg-white/5 <%= lang==='ar' ? 'text-right' : '' %>">
+    <% if (ok) { %>
+      <h1 class="text-2xl font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'تم الإرسال بنجاح' : 'Message sent' %></h1>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300"><%= lang==='ar' ? 'شكراً لك! سأتواصل معك قريبًا.' : 'Thanks! I will get back to you shortly.' %></p>
+    <% } else { %>
+      <h1 class="text-2xl font-semibold text-slate-900 dark:text-white"><%= lang==='ar' ? 'تعذر الإرسال' : 'Could not send' %></h1>
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+        <%= lang==='ar' ? 'تأكد من البيانات أو قم بإعداد SMTP في ملف .env.' : 'Check your inputs or configure SMTP in your .env file.' %>
+      </p>
+      <% if (errors && errors.includes('SMTP_NOT_CONFIGURED')) { %>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">SMTP_NOT_CONFIGURED</p>
+      <% } %>
+    <% } %>
+    <a href="/#contact" class="mt-6 inline-flex rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white hover:bg-cyan-600"><%= lang==='ar' ? 'العودة' : 'Back' %></a>
+  </div>
+</section>
+
+<%- include("layout-bottom") %>
