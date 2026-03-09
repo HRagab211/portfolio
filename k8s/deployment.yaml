@@ -16,7 +16,7 @@ spec:
         app: portfolio
     spec:
       containers:
-      - image: hragab211/hossam_portfolio:latest
+      - image: hragab211/hossam-portfolio:latest
         name: hossam-portfolio-sxv8t
         resources: {}
 status: {}
