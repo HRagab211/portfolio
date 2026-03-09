@@ -5,7 +5,7 @@ metadata:
     app: portfolio
   name: portfolio
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: portfolio
